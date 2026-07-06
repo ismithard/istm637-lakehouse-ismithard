@@ -1,0 +1,9 @@
+# Data files stay out of the repo — they are uploaded to the Databricks raw Volume instead
+data/
+*.csv
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+~$*
+.ipynb_checkpoints/
