@@ -1,22 +1,22 @@
 # ISTM 637 — Project Report
 
-**Name:** <YOUR NAME> · **NetID:** <NETID> · **Catalog:** `istm637_<NETID>` · **Schema:** `oilgas`
+**Name:** Ieuan Smithard · **NetID:** ismithard · **Catalog:** `istm637_ismithard` · **Schema:** `oilgas`
 
 ---
 
 ## Part 1 — GitHub integration
 
 Linked my GitHub account to Databricks via the Databricks GitHub App, created a Git
-folder cloning `istm637-lakehouse-<NETID>`, and demonstrated the check-out / check-in
+folder cloning `istm637-lakehouse-ismithard`, and demonstrated the check-out / check-in
 cycle with commits pushed from the Databricks Git dialog.
 
 Evidence: `screenshots/01_git_dialog_push.png` and the commit history on `main`.
 
 ## Part 2 — Lakeflow ingest into Unity Catalog
 
-Created catalog `istm637_<NETID>`, schema `oilgas`, and volume `raw` from the starter
+Created catalog `istm637_ismithard`, schema `oilgas`, and volume `raw` from the starter
 notebook; uploaded the three CSVs; ran the Lakeflow Declarative Pipeline attached to
-`ISTM637_Lakeflow_Ingest_Pipeline.sql` with `source_path = /Volumes/istm637_<NETID>/oilgas/raw`.
+`ISTM637_Lakeflow_Ingest_Pipeline.sql` with `source_path = /Volumes/istm637_ismithard/oilgas/raw`.
 
 Verified row counts: **dim_well = <N>**, **dim_date = <N>**, **fact_production = <N>**
 (expected ~50 / ~547 / ~22,800).
@@ -89,7 +89,7 @@ basin, target_formation, well_type + numeric features) predicts daily `oil_bbl`.
 | RMSE | TODO |
 | R² | TODO (target > 0.8) |
 
-Registered in Unity Catalog as `istm637_<NETID>.oilgas.oil_rate_predictor` with the
+Registered in Unity Catalog as `istm637_ismithard.oilgas.oil_rate_predictor` with the
 `@champion` alias; `forecast_well()` output saved to the `well_forecast` table.
 
 Evidence: `screenshots/09_model_metrics.png`, `10_uc_model_champion.png`, `11_forecast_180d.png`.

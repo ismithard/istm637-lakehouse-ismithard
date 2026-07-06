@@ -1,8 +1,8 @@
 # ISTM 637 — Building a Governed Lakehouse
 
-**Name:** <YOUR NAME>
-**NetID:** <NETID>
-**Catalog:** `istm637_<NETID>`
+**Name:** Ieuan Smithard
+**NetID:** ismithard
+**Catalog:** `istm637_ismithard`
 
 An end-to-end governed data + AI product on Databricks Free Edition: three oil & gas
 production CSVs ingested to a Unity Catalog star schema with Lakeflow, documented with
@@ -22,4 +22,4 @@ table shared to a classmate via OpenSharing.
 
 Data files (`dim_well.csv`, `dim_date.csv`, `fact_production.csv`) are intentionally
 not committed; they live in the Unity Catalog Volume
-`/Volumes/istm637_<NETID>/oilgas/raw`.
+`/Volumes/istm637_ismithard/oilgas/raw`.
