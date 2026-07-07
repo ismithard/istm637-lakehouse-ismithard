@@ -1,7 +1,9 @@
 # ISTM 637 — Building a Governed Lakehouse
 
 **Name:** Ieuan Smithard
+
 **NetID:** ismithard
+
 **Catalog:** `istm637_ismithard`
 
 An end-to-end governed data + AI product on Databricks Free Edition: three oil & gas
