@@ -60,15 +60,30 @@ top 5 wells by total gas.
 
 ### Test questions
 
-| # | Question | Correct? | Fix made |
-|---|---|---|---|
-| 1 | Which basin produced the most oil overall? | TODO | TODO |
-| 2 | Show monthly oil production trend for 2024. | TODO | TODO |
-| 3 | What is the average water cut for wells in the Permian Basin? | TODO | TODO |
-| 4 | Which operator has the most producing wells? | TODO | TODO |
-| 5 | List the top 5 wells by total gas production. | TODO | TODO |
+| # | Question | Correct? | Answer Genie gave | Fix made |
+|---|---|---|---|---|
+| 1 | Which basin produced the most oil overall? | Yes | Permian Basin, ~2.2 M bbl from 14 wells (Eagle Ford second at 2.1 M) | None — resolved against the "Total oil production by basin" trusted query |
+| 2 | Show monthly oil production trend for 2024. | Yes | Peak of 731 K bbl in May, declining to 429 K by December | None — used `dim_date.year = 2024` and ordered by `month`, exactly the join the instructions describe |
+| 3 | What is the average water cut for wells in the Permian Basin? | Yes | 51.79% across 5,431 records and 14 wells | None — Genie applied the `water_bbl / (oil_bbl + water_bbl)` definition from the space instructions and added an `(oil_bbl + water_bbl) > 0` guard on its own |
+| 4 | Which operator has the most producing wells? | Yes | Coterra and Marathon Oil tied at 7 each | None — correctly filtered `status = 'Producing'`, which is defined in the instructions |
+| 5 | List the top 5 wells by total gas production. | Yes | Weld 35-34 (1.13 M mcf), Lea 20-2, Martin 28-2H, La Salle 5-11H, Eddy 25-15H | None — matched the trusted query and helpfully added operator and basin columns |
 
-Evidence: `screenshots/07_genie_answer_sql.png`.
+All five questions were answered correctly on the first attempt, which I attribute to the
+Part 3 metadata work rather than luck: the corrected column comments gave Genie the units,
+and the space instructions supplied the two derived terms and the meaning of "producing".
+Question 3 is the clearest evidence — "water cut" appears nowhere in the schema, yet Genie
+generated the correct formula and even guarded against divide-by-zero.
+
+One nuance worth recording: for question 3 Genie computed the *average of the daily
+per-record ratios* rather than the pooled ratio `SUM(water_bbl) / SUM(oil_bbl + water_bbl)`.
+Both are defensible readings of "average water cut", but they are not the same number —
+the pooled version weights high-volume days more heavily. Since the question said
+"average", I accepted the row-level average; if this space were going to production I would
+pin the intended definition in the instructions so the two never diverge.
+
+Evidence: `screenshots/07_genie_answer_sql.png` (question 3, generated SQL visible), plus
+`07b_genie_q1_basin.png`, `07c_genie_q2_monthly.png`, `07d_genie_q4_operator.png`, and
+`07e_genie_q5_topgas.png` for the remaining four.
 
 ## Part 5 — AI/BI Dashboard
 

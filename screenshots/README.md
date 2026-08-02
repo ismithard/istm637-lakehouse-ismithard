@@ -11,7 +11,11 @@ Save each screenshot with these names as you complete the parts.
 | `04_rowcount_verification.png` | 2 | Notebook verification cell output (~50 / ~547 / ~22,800) |
 | `05_comments_fact.png` | 3 | Completed column comments on fact_production (and one dim) |
 | `06_tags_tables.png` | 3 | Tags (domain / layer / pii) on the tables |
-| `07_genie_answer_sql.png` | 4 | Genie Space answering a question, generated SQL visible |
+| `07_genie_answer_sql.png` | 4 | Genie Space answering a question, generated SQL visible (Q3, water cut) |
+| `07b_genie_q1_basin.png` | 4 | Test question 1 — most oil by basin |
+| `07c_genie_q2_monthly.png` | 4 | Test question 2 — monthly oil trend for 2024 |
+| `07d_genie_q4_operator.png` | 4 | Test question 4 — operator with most producing wells |
+| `07e_genie_q5_topgas.png` | 4 | Test question 5 — top 5 wells by total gas |
 | `08_dashboard_published.png` | 5 | Published dashboard: all 4 charts + filter applied |
 | `09_model_metrics.png` | 6 | Notebook output with MAE / RMSE / R² |
 | `10_uc_model_champion.png` | 6 | Unity Catalog → Models: oil_rate_predictor with @champion |
