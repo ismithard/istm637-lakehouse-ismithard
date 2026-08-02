@@ -30,11 +30,24 @@ Generated column comments with the Catalog Explorer AI assistant on all three ta
 then reviewed and corrected them before accepting. Tags applied: `domain`, `layer`
 (and `pii='none'`).
 
-**Corrections I made to the AI suggestions (2–3 sentences — TODO, examples of what to look for):**
-<!-- e.g., The AI described choke_size_64ths as a generic "size" — corrected to
-"surface choke setting in 64ths of an inch". It called gas_mcf "gas volume" without
-units — fixed to "thousand cubic feet (mcf) per day". It missed that water cut is
-water_bbl / (oil_bbl + water_bbl) when describing water_bbl. -->
+**Corrections I made to the AI suggestions:**
+
+The AI's drafts were fluent but consistently missing the domain units, so I rewrote
+them column by column. It described the volume columns generically — `oil_bbl` and
+`water_bbl` became "barrels **per day**" (they are daily rates, not cumulative
+volumes) and `gas_mcf` became "**thousand cubic feet (mcf) per day**" rather than
+just "gas volume". It called `choke_size_64ths` a generic "choke size", which I
+corrected to the surface choke opening measured in **64ths of an inch** (so 40 means
+40/64"), and it treated `date_id` as an identifier when it is really an integer
+**yyyymmdd** date key; I also specified that `tubing_pressure_psi` and
+`casing_pressure_psi` are *flowing* pressures in psi, that `lateral_length_ft` is the
+horizontal lateral in feet (0 for vertical wells), and that
+`initial_oil_potential_bopd` is an estimated initial rate in barrels of oil per day.
+
+Finally I added the two derived metrics an analyst would actually ask for to the
+`fact_production` table description — **GOR = gas_mcf / oil_bbl** and
+**water cut = water_bbl / (oil_bbl + water_bbl)** — so that Genie can resolve those
+terms in Part 4 without being told again in the space instructions.
 
 Evidence: `screenshots/05_comments_fact.png`, `06_tags_tables.png`.
 
