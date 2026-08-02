@@ -18,8 +18,9 @@ Created catalog `istm637_ismithard`, schema `oilgas`, and volume `raw` from the 
 notebook; uploaded the three CSVs; ran the Lakeflow Declarative Pipeline attached to
 `ISTM637_Lakeflow_Ingest_Pipeline.sql` with `source_path = /Volumes/istm637_ismithard/oilgas/raw`.
 
-Verified row counts: **dim_well = <N>**, **dim_date = <N>**, **fact_production = <N>**
-(expected ~50 / ~547 / ~22,800).
+Verified row counts: **dim_well = 50**, **dim_date = 547**, **fact_production = 22,806**
+(expected ~50 / ~547 / ~22,800). The two Lakeflow `EXPECT` constraints on
+`fact_production` (`valid_oil`, `valid_dates`) passed on load.
 
 Evidence: `screenshots/02_pipeline_run_graph.png`, `03_catalog_tables.png`, `04_rowcount_verification.png`.
 
