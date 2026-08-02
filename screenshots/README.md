@@ -5,6 +5,7 @@ Save each screenshot with these names as you complete the parts.
 | File | Part | What it must show |
 |---|---|---|
 | `01_git_dialog_push.png` | 1 | Databricks Git dialog showing a commit & push |
+| `01b_git_push_success.png` | 1 | Confirmation: "Successfully committed and pushed changes to branch main" |
 | `02_pipeline_run_graph.png` | 2 | Successful Lakeflow run graph with the 3 tables |
 | `03_catalog_tables.png` | 2 | Catalog Explorer: the 3 tables under your schema |
 | `04_rowcount_verification.png` | 2 | Notebook verification cell output (~50 / ~547 / ~22,800) |
