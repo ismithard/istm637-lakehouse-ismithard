@@ -200,7 +200,9 @@ still team up and share with one another, documenting the setup rather than test
 consumption. This section therefore evidences the full provider-side workflow in both
 directions and does not claim a verified read of the shared table.
 
-**Partner:** <PARTNER NAME / NETID>
+**Partner:** Frank Colwell (NetID `frankcolwell`), registered in my metastore as the
+Delta Sharing recipient `frank-colwell` — authentication type **DATABRICKS**, region
+`us-east-2`, i.e. a Databricks-to-Databricks share rather than an open-protocol one.
 
 ### As provider
 
@@ -237,6 +239,7 @@ sharing identifier; Unity Catalog then issues a one-time activation link yieldin
 `config.share` credential file (sharing endpoint plus a bearer token) that any
 open-source Delta Sharing client can use — no Databricks account required.
 
-Evidence: `screenshots/14_share_object.png` (share containing `dim_well`),
-`14b_recipient_created.png` (recipient created from my partner's sharing identifier and
-the share granted to them).
+Evidence: `screenshots/14_share_object.png` (the Share data wizard's asset picker with
+`dim_well` selected out of `istm637_ismithard.oilgas`, and the other three tables
+deliberately left unselected) and `14b_recipient_created.png` (the recipient step with
+`frank-colwell` attached to the share, authentication type DATABRICKS).
