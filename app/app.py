@@ -21,13 +21,34 @@ SCHEMA = "oilgas"
 st.set_page_config(page_title="Well Production & Forecast", layout="wide")
 
 
+def warehouse_http_path():
+    """
+    Resolve the warehouse HTTP path from whichever env var the app resource set.
+    A SQL warehouse resource may expose either the full HTTP path or just the
+    warehouse ID, so accept both rather than assuming one.
+    """
+    for var in ("DATABRICKS_WAREHOUSE_HTTP_PATH", "DATABRICKS_HTTP_PATH"):
+        value = os.environ.get(var)
+        if value and value.startswith("/sql/"):
+            return value
+    for var in ("DATABRICKS_WAREHOUSE_ID", "DATABRICKS_WAREHOUSE_HTTP_PATH"):
+        value = os.environ.get(var)
+        if value:
+            return f"/sql/1.0/warehouses/{value.strip('/').split('/')[-1]}"
+    raise RuntimeError(
+        "No warehouse env var found. Add a SQL warehouse resource to the app "
+        "with key 'sql-warehouse'. Present vars: "
+        + ", ".join(sorted(k for k in os.environ if "DATABRICKS" in k))
+    )
+
+
 @st.cache_resource
 def connection():
     """Connect to the SQL warehouse using the app's own service principal."""
     cfg = Config()  # picks up DATABRICKS_HOST + the app's OAuth credentials
     return sql.connect(
-        server_hostname=cfg.host,
-        http_path=os.environ["DATABRICKS_WAREHOUSE_HTTP_PATH"],
+        server_hostname=cfg.host.replace("https://", "").rstrip("/"),
+        http_path=warehouse_http_path(),
         credentials_provider=lambda: cfg.authenticate,
     )
 
@@ -84,7 +105,18 @@ st.caption(
     "forecast from the registered oil_rate_predictor @champion model"
 )
 
-wells = load_wells()
+try:
+    with st.spinner("Connecting to the SQL warehouse…"):
+        wells = load_wells()
+except Exception as exc:  # surface the failure instead of spinning forever
+    st.error(f"Could not read dim_well: {type(exc).__name__}: {exc}")
+    st.caption(
+        "Checks: (1) the app has a SQL warehouse resource, (2) the warehouse is "
+        "running, (3) the app's service principal has SELECT on "
+        f"{CATALOG}.{SCHEMA}."
+    )
+    st.stop()
+
 if wells.empty:
     st.error(
         "No wells returned. The app's service principal probably lacks SELECT on "
