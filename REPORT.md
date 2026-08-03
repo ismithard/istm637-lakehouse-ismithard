@@ -104,7 +104,16 @@ JOIN dim_date d ON f.date_id = d.date_id
 JOIN dim_well w ON f.well_id = w.well_id
 ```
 
-Evidence: `screenshots/08_dashboard_published.png`.
+Six widgets in total: the monthly oil line chart, total oil by basin, producing wells by
+operator (filtered to `status = 'Producing'`), and three KPI counters for total oil, gas,
+and water. A **global filter on `basin`** sits in the page's filter rail and drives every
+widget at once — the screenshots were captured with `Permian Basin` selected, which is why
+the counters read 2.2 M bbl oil / 6.27 M mcf gas / 2.4 M bbl water and the basin bar chart
+collapses to a single column. Those figures reconcile with the Genie answer in Part 4,
+where the Permian Basin was identified as the top producer at approximately 2.2 M barrels.
+
+Evidence: `screenshots/08_dashboard_published.png` (upper half + filter rail) and
+`08b_dashboard_counters.png` (lower half).
 
 ## Part 6 — Prediction model
 

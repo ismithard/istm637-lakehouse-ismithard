@@ -16,7 +16,8 @@ Save each screenshot with these names as you complete the parts.
 | `07c_genie_q2_monthly.png` | 4 | Test question 2 — monthly oil trend for 2024 |
 | `07d_genie_q4_operator.png` | 4 | Test question 4 — operator with most producing wells |
 | `07e_genie_q5_topgas.png` | 4 | Test question 5 — top 5 wells by total gas |
-| `08_dashboard_published.png` | 5 | Published dashboard: all 4 charts + filter applied |
+| `08_dashboard_published.png` | 5 | Published dashboard: line + basin bar, with the basin filter applied |
+| `08b_dashboard_counters.png` | 5 | Same dashboard, lower half: operator bar + the three KPI counters |
 | `09_model_metrics.png` | 6 | Notebook output with MAE / RMSE / R² |
 | `10_uc_model_champion.png` | 6 | Unity Catalog → Models: oil_rate_predictor with @champion |
 | `11_forecast_180d.png` | 6 | Sample 180-day forecast for one well |
