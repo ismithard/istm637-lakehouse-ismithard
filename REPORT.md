@@ -165,6 +165,31 @@ compute while still serving the governed model's predictions. The app's service
 identity was granted SELECT on the `oilgas` schema so its queries are authorized by
 Unity Catalog.
 
+**Implementation.** The app is a single-page Streamlit app (source committed under
+`app/` in this repo: `app.py`, `app.yaml`, `requirements.txt`). It connects to the
+serverless SQL warehouse with the `databricks-sql-connector`, authenticating as the app's
+own service principal via the SDK's `Config()` — no personal token is embedded anywhere.
+The warehouse is wired in as a declared **app resource** keyed `sql-warehouse`, and the
+three queries are parameterised on `well_id` rather than string-formatted, so the well
+selector cannot inject SQL.
+
+Two things were needed to make Unity Catalog authorise the app, and both are worth
+recording because neither is obvious from the app scaffold:
+
+1. The app's service principal starts with **no** privileges. It needed
+   `USE CATALOG`, `USE SCHEMA`, and `SELECT` granted on `istm637_ismithard.oilgas`
+   before any query would return rows.
+2. A SQL warehouse resource had to be attached to the app; without it the connector has
+   no HTTP path and the page hangs on the first query rather than failing loudly. I
+   handled that in code by resolving the path from either the HTTP-path or warehouse-ID
+   environment variable and surfacing connection failures to the page.
+
+**Verification.** Selecting `Adams 21-32` (EOG Resources, DJ Basin) renders 318 days of
+daily oil history — the decline curve and its downtime dips are both visible — alongside
+the 180-day forecast declining from roughly 260 to 195 bbl/day, totalling **38,367 bbl**.
+The forecast series starts near where the history ends, which is the sanity check that
+matters: the batch predictions are continuous with the observed rate rather than offset.
+
 Evidence: `screenshots/12_app_deployed.png`, `13_app_history_forecast.png`.
 
 ## Part 8 — OpenSharing
