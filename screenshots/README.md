@@ -24,4 +24,8 @@ Save each screenshot with these names as you complete the parts.
 | `11b_well_forecast_table.png` | 6 | `well_forecast` table written: 6,660 rows (37 wells × 180 days) |
 | `12_app_deployed.png` | 7 | The app listed/running in Databricks Apps |
 | `13_app_history_forecast.png` | 7 | App showing history + forecast for a chosen well |
-| `14_shared_table_query.png` | 8 | Querying your partner's shared table (full path) — OR `14_share_object.png` for the fallback |
+| `14_share_object.png` | 8 | The share object with `dim_well` added to it |
+| `14b_recipient_created.png` | 8 | Recipient created from partner's sharing identifier, share granted |
+
+Part 8 note: per Prof. Johnston, Free Edition blocks the recipient from viewing a granted
+share, so the deliverable is the share **setup** on both sides — no consumption screenshot.

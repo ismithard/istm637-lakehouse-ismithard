@@ -194,54 +194,49 @@ Evidence: `screenshots/12_app_deployed.png`, `13_app_history_forecast.png`.
 
 ## Part 8 — OpenSharing
 
-<!-- Keep ONE of the two sections below and delete the other. -->
+**Scope note.** Prof. Johnston confirmed by email that Databricks Free Edition blocks the
+recipient from actually *seeing* a share after it is granted, and instructed the class to
+still team up and share with one another, documenting the setup rather than testing the
+consumption. This section therefore evidences the full provider-side workflow in both
+directions and does not claim a verified read of the shared table.
 
-### Option A — Full Databricks-to-Databricks exchange
+**Partner:** <PARTNER NAME / NETID>
 
-Partnered with **<PARTNER NAME / NETID>**. As provider I created a share containing
-`dim_well`, added my partner as a recipient using their sharing identifier, and
-granted the share. As recipient I mounted my partner's share to a catalog and queried
-their `dim_well` from a notebook. Both directions verified.
+### As provider
 
-Evidence: `screenshots/14_shared_table_query.png`.
-
-### Option B — Fallback (recipient creation restricted on Free Edition)
-
-Recipient creation was blocked on my Free Edition account, so per the assignment I
-completed the provider workflow and document here how a non-Databricks recipient
-would consume the share via the open sharing protocol.
-
-I created the share object and added `dim_well` to it
-(`screenshots/14_share_object.png`). To serve a recipient outside Databricks, the
-provider creates a recipient **without** a Databricks sharing identifier. Unity
-Catalog then issues an **activation link**, from which the recipient downloads a
-credential file (`config.share`) — a JSON profile containing the sharing server
-endpoint and a bearer token that authenticates every request. The token is the
-secret: it is downloadable once and should be transferred out-of-band.
-
-The recipient consumes the share with any open-source Delta Sharing client — no
-Databricks account required. In Python:
-
-```python
-# pip install delta-sharing
-import delta_sharing
-
-profile = "config.share"                      # credential file from the activation link
-client = delta_sharing.SharingClient(profile)
-client.list_all_tables()                      # discover what the provider granted
-
-# Load the shared table: <profile>#<share>.<schema>.<table>
-df = delta_sharing.load_as_pandas(f"{profile}#istm637_share.oilgas.dim_well")
-print(df.head())
-```
-
-Or with Spark SQL after `CREATE CATALOG shared_oilgas USING SHARE ...` on a platform
-that supports it, the recipient simply runs:
+My sharing identifier came from:
 
 ```sql
-SELECT basin, COUNT(*) AS wells FROM shared_oilgas.oilgas.dim_well GROUP BY basin;
+SELECT CURRENT_METASTORE();
 ```
 
-Because the share is governed by Unity Catalog, the provider can revoke the
-recipient or remove the table at any time, and every read is audited — the same
-governance that applies to my own workspace queries.
+I created a share, added `dim_well` to it, created a recipient using my partner's
+sharing identifier, and granted the share to that recipient
+(Catalog → ⚙ → OpenSharing → Shared by me). `dim_well` is the right object to share for
+this exercise: it is the well master dimension, so it carries descriptive attributes
+(operator, basin, formation, status) with no production volumes and no PII — which is
+consistent with the `pii='none'` tag applied in Part 3.
+
+### As recipient
+
+My partner performed the mirror-image steps against my sharing identifier, so my
+metastore appears as a recipient on their side and their share is addressed to me. Per
+the instruction above, the received share could not be mounted and queried on Free
+Edition, so no consumption screenshot is included.
+
+### How the governance works
+
+Delta Sharing does not copy data. The provider grants a *recipient* access to specific
+objects inside a *share*, and every read is served from the provider's storage through
+the sharing server, authorised per request. That has two consequences worth stating: the
+provider can revoke the recipient or remove a table at any time and access stops
+immediately, and every read is attributable in the provider's audit log — the same Unity
+Catalog governance that applies to queries inside my own workspace. Had the recipient
+been outside Databricks entirely, the provider would create the recipient *without* a
+sharing identifier; Unity Catalog then issues a one-time activation link yielding a
+`config.share` credential file (sharing endpoint plus a bearer token) that any
+open-source Delta Sharing client can use — no Databricks account required.
+
+Evidence: `screenshots/14_share_object.png` (share containing `dim_well`),
+`14b_recipient_created.png` (recipient created from my partner's sharing identifier and
+the share granted to them).
