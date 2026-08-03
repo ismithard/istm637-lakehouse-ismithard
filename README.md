@@ -19,8 +19,9 @@ table shared to a classmate via OpenSharing.
 | `ISTM637_Databricks_Project_Starter.ipynb` | Setup + verification notebook (catalog, schema, volume, tags, validation queries) |
 | `ISTM637_Predictive_Model_Notebook.ipynb` | Trains, evaluates, and registers `oil_rate_predictor`; writes `well_forecast` |
 | `ISTM637_Lakeflow_Ingest_Pipeline.sql` | Lakeflow Declarative Pipeline source — ingests the 3 CSVs into Unity Catalog |
+| `app/` | Databricks App source (Part 7): Streamlit `app.py`, `app.yaml`, `requirements.txt` |
 | `REPORT.md` | Written report covering Parts 1–8 |
-| `screenshots/` | Evidence for each part (see `screenshots/README.md` for the shot list) |
+| `screenshots/` | Evidence for each part (see `screenshots/README.md` for the index) |
 
 Data files (`dim_well.csv`, `dim_date.csv`, `fact_production.csv`) are intentionally
 not committed; they live in the Unity Catalog Volume

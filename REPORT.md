@@ -10,7 +10,8 @@ Linked my GitHub account to Databricks via the Databricks GitHub App, created a 
 folder cloning `istm637-lakehouse-ismithard`, and demonstrated the check-out / check-in
 cycle with commits pushed from the Databricks Git dialog.
 
-Evidence: `screenshots/01_git_dialog_push.png` and the commit history on `main`.
+Evidence: `screenshots/01_git_dialog_push.png`, `01b_git_push_success.png`, and the commit
+history on `main`.
 
 ## Part 2 — Lakeflow ingest into Unity Catalog
 
