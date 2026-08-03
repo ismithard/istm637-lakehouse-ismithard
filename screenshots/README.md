@@ -21,6 +21,7 @@ Save each screenshot with these names as you complete the parts.
 | `09_model_metrics.png` | 6 | Notebook output with MAE / RMSE / R² |
 | `10_uc_model_champion.png` | 6 | Unity Catalog → Models: oil_rate_predictor with @champion |
 | `11_forecast_180d.png` | 6 | Sample 180-day forecast for one well |
+| `11b_well_forecast_table.png` | 6 | `well_forecast` table written: 6,660 rows (37 wells × 180 days) |
 | `12_app_deployed.png` | 7 | The app listed/running in Databricks Apps |
 | `13_app_history_forecast.png` | 7 | App showing history + forecast for a chosen well |
 | `14_shared_table_query.png` | 8 | Querying your partner's shared table (full path) — OR `14_share_object.png` for the fallback |

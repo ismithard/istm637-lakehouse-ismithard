@@ -123,14 +123,35 @@ basin, target_formation, well_type + numeric features) predicts daily `oil_bbl`.
 
 | Metric | Value |
 |---|---|
-| MAE | TODO |
-| RMSE | TODO |
-| R² | TODO (target > 0.8) |
+| MAE | 33.5 bbl/day |
+| RMSE | 70.0 bbl/day |
+| R² | **0.933** (target > 0.8) |
 
-Registered in Unity Catalog as `istm637_ismithard.oilgas.oil_rate_predictor` with the
-`@champion` alias; `forecast_well()` output saved to the `well_forecast` table.
+The model explains 93.3% of the variance in daily oil rate on the held-out test set.
+The gap between MAE (33.5) and RMSE (70.0) is worth noting: RMSE penalises large errors
+quadratically, so a value roughly twice the MAE says the residuals are not uniform — most
+days are predicted within ~34 bbl, but a minority of days (most plausibly early flowback,
+when rates move fastest, and shut-in or workover days) carry much larger errors. For a
+screening tool at this grain that is acceptable, and it is the expected signature of a
+decline-driven process.
 
-Evidence: `screenshots/09_model_metrics.png`, `10_uc_model_champion.png`, `11_forecast_180d.png`.
+Registration to Unity Catalog succeeded on the first attempt, so the notebook's
+Volume-fallback path (for workspaces that block model-artifact uploads) was not needed:
+
+```
+Successfully registered model 'istm637_ismithard.oilgas.oil_rate_predictor'.
+Created version '1' of model 'istm637_ismithard.oilgas.oil_rate_predictor'
+Registered: istm637_ismithard.oilgas.oil_rate_predictor version 1
+Alias @champion -> istm637_ismithard.oilgas.oil_rate_predictor
+```
+
+`forecast_well()` produced a 180-day forecast for the sample well `WELL-0001` totalling
+**51,855 bbl**, and the batch step wrote the `well_forecast` table with **6,660 rows
+(37 producing wells × 180 days)** — this is the table the Part 7 app reads, which is why
+the app needs no model loading of its own.
+
+Evidence: `screenshots/09_model_metrics.png`, `10_uc_model_champion.png`,
+`11_forecast_180d.png`, `11b_well_forecast_table.png`.
 
 ## Part 7 — Data app
 
